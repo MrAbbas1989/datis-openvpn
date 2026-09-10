@@ -1,0 +1,13 @@
+[Unit]
+Description=Datis OpenVPN server
+After=network-online.target datis-firewall.service
+Wants=network-online.target
+Requires=datis-firewall.service
+[Service]
+Type=simple
+ExecStart=/usr/sbin/openvpn --config /etc/datisvpn/openvpn.conf
+Restart=on-failure
+RestartSec=3
+LimitNOFILE=65536
+[Install]
+WantedBy=multi-user.target

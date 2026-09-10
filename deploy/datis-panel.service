@@ -1,0 +1,21 @@
+[Unit]
+Description=Datis OpenVPN web panel
+After=network.target
+[Service]
+Type=simple
+User=datisvpn
+Group=datisvpn
+WorkingDirectory=/opt/datisvpn
+EnvironmentFile=/etc/datisvpn/panel.env
+ExecStart=/opt/datisvpn/venv/bin/gunicorn --bind 127.0.0.1:8080 --workers 2 --timeout 30 --access-logfile - 'datis.web:create_app()'
+Restart=on-failure
+RestartSec=3
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/datisvpn
+RestrictAddressFamilies=AF_INET AF_UNIX
+[Install]
+WantedBy=multi-user.target

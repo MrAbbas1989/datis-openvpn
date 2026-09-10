@@ -1,0 +1,25 @@
+[Unit]
+Description=Datis OpenVPN accounting agent
+After=datis-openvpn.service
+Wants=datis-openvpn.service
+[Service]
+Type=notify
+NotifyAccess=main
+User=datisvpn
+Group=datisvpn
+WorkingDirectory=/opt/datisvpn
+EnvironmentFile=/etc/datisvpn/panel.env
+ExecStart=/opt/datisvpn/venv/bin/python -m datis.agent
+Restart=always
+RestartSec=3
+WatchdogSec=30
+TimeoutStopSec=10
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/datisvpn /run/datisvpn
+RestrictAddressFamilies=AF_UNIX
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,11 @@
+[Unit]
+Description=Datis scoped VPN firewall rules
+After=network-online.target
+Before=datis-openvpn.service
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/opt/datisvpn/firewall.sh start
+ExecStop=/opt/datisvpn/firewall.sh stop
+[Install]
+WantedBy=multi-user.target

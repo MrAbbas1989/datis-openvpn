@@ -1,0 +1,13 @@
+__pycache__/
+.pytest_cache/
+.venv/
+*.pyc
+*.db
+*.db-*
+*.sqlite*
+*.ovpn
+*.key
+*.pem
+.env
+*.tar.gz
+.sites-runtime/
