@@ -59,6 +59,10 @@ chown -R root:root /opt/datisvpn
 chmod -R u=rwX,go=rX /opt/datisvpn
 python3 -m venv /opt/datisvpn/venv
 /opt/datisvpn/venv/bin/pip install --disable-pip-version-check -r /opt/datisvpn/requirements.txt
+# umask 077 protects secrets, but the runtime must be readable/executable by datisvpn.
+# Keep root ownership and remove group/other write access; never chmod /etc/datisvpn.
+chmod -R u=rwX,go=rX /opt/datisvpn/venv
+runuser -u datisvpn -- /opt/datisvpn/venv/bin/python -c 'import flask, gunicorn'
 install -d -m 0700 /etc/datisvpn/easy-rsa
 cp -R /usr/share/easy-rsa/. /etc/datisvpn/easy-rsa/
 (
